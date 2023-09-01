@@ -1,0 +1,33 @@
+<mat-toolbar class="max-w-7xl mx-auto border-x justify-between">
+  <a routerLink="home">Shop Đồng Hồ</a>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon [matBadge]="itemsQuantity" [matBadgeHidden]="!itemsQuantity" matBadgeColor="warn">shopping_cart</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <div class="p-3 divide-y divide-solid">
+      <div class="pb-3 flex justify-between">
+        <span class="mr-16">{{itemsQuantity}} Sản phẩm</span>
+        <a routerLink="cart">Xem Giỏ Hàng</a>
+      </div>
+      <div class="py-3">
+        <div *ngFor="let item of cart.items"
+        class="flex justify-between font-light mg-2">
+        {{item.name}} x {{item.quantity}}
+          <span class="font-bold">{{ item.price * item.quantity | currency }}</span>
+        </div>
+      </div>
+      <div class="flex justify-between py-3 font-light">
+        Tổng cộng
+        <span class="font-bold">{{ getTotal(cart.items) | currency }}</span>
+      </div>
+      <div class="pt-3 flex justify-between">
+        <button (click)="onClearCart()" class="w-9 h-9 rounded-full bg-red-500 text-white">
+          <mat-icon>remove_shopping_cart</mat-icon>
+        </button>
+        <button class="w-9 h-9 rounded-full bg-green-500 text-white" routerLink="/cart">
+          <mat-icon>wallet</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-menu>
+</mat-toolbar>
