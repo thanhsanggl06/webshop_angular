@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Router } from "@angular/router";
 import { Product } from "src/app/models/product.model";
 
 @Component({
@@ -7,21 +8,20 @@ import { Product } from "src/app/models/product.model";
 })
 export class ProductBoxComponent implements OnInit {
   @Input() fullWidthMode = false;
-  product : Product | undefined = {
-    id: 1,
-    title: 'Đồng hồ',
-    price: 150,
-    category: "Thể thao",
-    description : "Đồng hồ thể thao abc",
-    image: "https://via.placeholder.com/150"
-  }
+  @Input()
+  product : Product | undefined ;
   @Output() addToCart= new EventEmitter();
+ 
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   onAddToCart() : void{
     this.addToCart.emit(this.product);
+  }
+
+  toProductDetail(id: number) : void{
+      this.router.navigate(['/product', id]);
   }
 }
