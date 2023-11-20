@@ -2,13 +2,13 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevetaion-z8 w-full">
     // Các cột
     <ng-container matColumnDef="product">
-      <th mat-header-cell *matHeaderCellDef>Sản phẩm</th> //Head
-      //Cell
-      <td mat-cell *matCellDef="let element"> 
+      <th mat-header-cell *matHeaderCellDef>Sản phẩm</th>
+      //Head //Cell
+      <td mat-cell *matCellDef="let element">
         <img src="{{ element.product }}" alt="product" class="my-5 w-40" />
       </td>
       //Footer
-      <td mat-footer-cell *matFooterCellDef> 
+      <td mat-footer-cell *matFooterCellDef>
         <button mat-raised-button routerLink="/home">Tiếp tục mua sắm</button>
       </td>
     </ng-container>
@@ -65,7 +65,7 @@
         </button>
       </td>
       <td mat-footer-cell *matFooterCellDef>
-        <button mat-raised-button color="primary" class="float-right">Đặt hàng</button>
+        <button mat-raised-button color="primary" class="float-right" (click)="onPlaceOrder()">Đặt hàng</button>
       </td>
     </ng-container>
 

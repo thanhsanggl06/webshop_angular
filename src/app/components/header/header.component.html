@@ -1,18 +1,20 @@
 <mat-toolbar class="max-w-7xl mx-auto border-x justify-between">
-  <a routerLink="home">Shop Đồng Hồ</a>
+  <div>
+    <a routerLink="home">Shop Đồng Hồ</a> |
+    <a routerLink="tracking-order">Tra cứu đơn hàng</a>
+  </div>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon [matBadge]="itemsQuantity" [matBadgeHidden]="!itemsQuantity" matBadgeColor="warn">shopping_cart</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
     <div class="p-3 divide-y divide-solid">
       <div class="pb-3 flex justify-between">
-        <span class="mr-16">{{itemsQuantity}} Sản phẩm</span>
+        <span class="mr-16">{{ itemsQuantity }} Sản phẩm</span>
         <a routerLink="cart">Xem Giỏ Hàng</a>
       </div>
       <div class="py-3">
-        <div *ngFor="let item of cart.items"
-        class="flex justify-between font-light mg-2">
-        {{item.name}} x {{item.quantity}}
+        <div *ngFor="let item of cart.items" class="flex justify-between font-light mg-2">
+          {{ item.name }} x {{ item.quantity }}
           <span class="font-bold">{{ item.price * item.quantity | currency }}</span>
         </div>
       </div>

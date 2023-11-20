@@ -1,0 +1,104 @@
+<mat-drawer-container [autosize]="true" class="min-h-full max-w-7xl mx-auto border-x">
+  <p class="text-center mt-3 font-bold text-2xl">Tra cứu đơn hàng</p>
+  <mat-card class="bg-yellow-50 d-flex justify-center align-items-center my-5">
+    <p class="font-bold my-auto">Số điện thoại đặt hàng</p>
+    <input class="border-1 w-50 h-10 p-1 mx-3" type="text" name="phoneNumber" id="phoneNumber" [(ngModel)]="phoneNumber" />
+    <button mat-raised-button (click)="onTrackingOrder()">Tra cứu</button>
+  </mat-card>
+  <ng-container *ngFor="let order of listTrackingOrder; let i = index">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed d-flex flex-column align-items-start"
+            type="button"
+            data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#flush-collapse' + i"
+            aria-expanded="false"
+            [attr.aria-controls]="'flush-collapse' + i"
+          >
+            <div class="">
+              <div>
+                <span class="mr-5">Mã đơn hàng : {{ order.id }}</span> |
+                <span class="ml-5">Ngày tạo : {{ order.orderDate[2] + "/" + order.orderDate[1] + "/" + order.orderDate[0] }}</span>
+              </div>
+              <div>
+                <span>Trạng thái đơn hàng : {{ order.orderStatus }}</span>
+              </div>
+            </div>
+          </button>
+        </h2>
+        <div [id]="'flush-collapse' + i" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <mat-card class="max-w-7xl mx-auto">
+              <h2>Người đặt hàng : {{ order.customer.name }} - {{ order.customer.phoneNumber }}</h2>
+              <h2>Địa chỉ giao hàng : {{ order.shippingAddress }}</h2>
+              <table mat-table [dataSource]="order.orderDetails" class="mat-elevetaion-z8 w-full">
+                // Các cột
+                <ng-container matColumnDef="product">
+                  <th mat-header-cell *matHeaderCellDef>Sản phẩm</th>
+                  //Head //Cell
+                  <td mat-cell *matCellDef="let element">
+                    <img src="{{ element.product.imageUrl }}" alt="product" class="my-5 w-16" />
+                  </td>
+                  //Footer
+                  <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Tên sản phẩm</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span class="truncate max-w-xs block">{{ element.product.title }}</span>
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                  <th mat-header-cell *matHeaderCellDef>Đơn giá</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.price | currency }}
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                  <th mat-header-cell *matHeaderCellDef>Số lượng</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span>
+                      {{ element.quantity }}
+                    </span>
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef>Tổng cộng</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.quantity * element.price | currency }}
+                  </td>
+                  <td mat-footer-cell *matFooterCellDef>
+                    <span class="font-bold py-5 block"> {{ getTotal(order.orderDetails) | currency }} </span>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element"></td>
+                  <td mat-footer-cell *matFooterCellDef>
+                    <!-- <button mat-raised-button color="primary" class="float-right" (click)="onPlaceOrder()">Đặt hàng</button> -->
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                // Định nghĩa dòng tiêu đề
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                // Số lượng dòng
+                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+              </table>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</mat-drawer-container>
